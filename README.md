@@ -58,5 +58,5 @@ Toggle Docs is an application that allows users to toggle between different docu
     npm run dev
     ```
 
-5. Open your browser and visit http://localhost:3000 to view the app.
+5. Open your browser and visit http://localhost:5173 to view the app.
 
