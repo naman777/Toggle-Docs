@@ -1,11 +1,14 @@
 import { WebSocketServer } from 'ws';
-import { CREATE_ROOM, JOIN_ROOM } from './classes/messages';
+import { ADD_CONTENT, CLOSE_ROOM, CREATE_ROOM, GET_CONTENT, JOIN_ROOM, SAVE_CONTENT } from './classes/messages';
 import { RoomManager } from './classes/roomManager';
+import mongoose from 'mongoose';
+import { uri } from './db/config';
 
 const wss = new WebSocketServer({ port: 8080 });
 
 const roomManager = new RoomManager();
 
+require('dotenv').config();
 
 wss.on('connection', function connection(ws) {
     ws.on('error', console.error);
@@ -21,13 +24,33 @@ wss.on('connection', function connection(ws) {
             roomManager.joinRoom(message.roomId, ws, message.usersName )
         }
 
+        if(message.type === ADD_CONTENT){
+            roomManager.addContent(message.roomId, message.content, ws)
+        }
+
+        if(message.type === SAVE_CONTENT){
+            roomManager.saveContent(message.roomId, message.content, message)
+        }
+
+        if(message.type === GET_CONTENT){
+            roomManager.getContent(message.roomId, ws);
+        }
+
+        if(message.type === CLOSE_ROOM){
+            roomManager.closeRoom(message.roomId);
+        }
+
         console.log("User Connected");
     
     })
 
-    ws.on('message', function message(data) {
-        console.log('received: %s', data);
+    ws.on('close', () => {
+        roomManager.handleDisconnect(ws);
     });
 
   
 });
+
+
+mongoose.connect(uri).then(() => console.log('Database connected successfully'))
+  .catch(err => console.error('Database connection error:', err));

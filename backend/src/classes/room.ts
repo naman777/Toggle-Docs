@@ -1,11 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
 import WebSocket from 'ws';
+import { Document } from './document';
 
 export class Room {
     public id: string;
     private name: string;
     private users: WebSocket[];
-    private usersName: string[]
+    private usersName: string[];
+    private document: Document;
 
     constructor(roomName: string, socket: WebSocket, usersName: string) {
         this.id = uuidv4();
@@ -13,6 +15,7 @@ export class Room {
         this.users = [];
         this.usersName = [];
         this.addUser(socket, usersName);
+        this.document = new Document();
     }
 
     addUser(socket: WebSocket, usersName: string): void {
@@ -25,11 +28,38 @@ export class Room {
             users: this.usersName,
             roomId: this.id
         }))
-        
+
+        this.broadcastMessage(JSON.stringify({
+            type: 'updateUsers',
+            users: this.usersName
+        }));
+
+    }
+
+
+    addContent(newContent: string): void {
+        this.document.setContent(newContent);
+        this.broadcastMessage(JSON.stringify({
+            type: 'documentEdited',
+            content: newContent
+        }));
+    }
+
+    saveContent(content: string){
+        this.document.setContent(content);
+        this.broadcastMessage(JSON.stringify({
+            type: 'Document Saved',
+            content: content
+        }));
     }
 
     removeUser(socket: WebSocket): void {
         this.users = this.users.filter(user => user !== socket);
+        this.broadcastMessage(JSON.stringify({
+            type: 'updateUsers',
+            users: this.usersName
+        }));
+
     }
 
     broadcastMessage(message: string): void {
@@ -38,15 +68,5 @@ export class Room {
         });
     }
 
-    getId(): string {
-        return this.id;
-    }
-
-    getName(): string {
-        return this.name;
-    }
-
-    getUsers(): WebSocket[] {
-        return this.users;
-    }
+    
 }
