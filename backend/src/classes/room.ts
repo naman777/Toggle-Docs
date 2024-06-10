@@ -46,7 +46,7 @@ export class Room {
 
         this.broadcastMessage(JSON.stringify({
             type: 'documentEdited',
-            content: newContent
+            content: this.documnetContent
         }));
     }
 
@@ -54,7 +54,7 @@ export class Room {
         this.documnetContent = content;
         this.broadcastMessage(JSON.stringify({
             type: 'documentSaved',
-            content: content
+            content: this.documnetContent
         }));
     }
 

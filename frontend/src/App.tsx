@@ -6,6 +6,7 @@ import { WebSocketProvider } from './hooks/useSocket'
 import Room from './pages/Room'
 import JoinRoom from './pages/JoinRoom'
 import { UserProvider } from './hooks/UserContext'
+import GetDocument from './pages/GetDocument'
 
 function App() {
   
@@ -18,6 +19,7 @@ function App() {
             <Route path="/" element={<Home/>} />
             <Route path="/create-room" element={<CreateRoom/>} />
             <Route path="/join-room" element={<JoinRoom/>} />
+            <Route path="/get-document" element={<GetDocument/>} />
             <Route path="/room/:roomName/:roomId/:documentTitle" element={<Room />} />
             
           </Routes>

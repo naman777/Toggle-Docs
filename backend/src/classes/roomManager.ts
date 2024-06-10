@@ -58,10 +58,15 @@ export class RoomManager {
         })
 
         if(docs){
-            socket.send(docs.documentContent!);
+            socket.send(JSON.stringify({
+                content:docs.documentContent!,
+                type: "documentFound"
+            }));
         }
         else{
-            socket.send("No Content Found or Wrong Room Id");
+            socket.send(JSON.stringify({
+                type: "Document not found or Wrong Room Id"
+            }))
         }
     }
 
