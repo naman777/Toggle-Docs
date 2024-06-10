@@ -12,7 +12,6 @@ const Room: React.FC = () => {
     const [content, setContent] = useState('');
     const { users, setUsers } = useUserContext();
 
-    // Update the content and send it to the server whenever it changes
     useEffect(() => {
         if (socket) {
             socket.send(JSON.stringify({
@@ -23,7 +22,6 @@ const Room: React.FC = () => {
         }
     }, [socket, roomId, content]);
 
-    // Handle WebSocket messages to update content and users in the room
     useEffect(() => {
         if (socket) {
             const handleSocketMessage = (event: MessageEvent) => {
@@ -69,7 +67,7 @@ export function TextEditor({ value, onChange }: { value: string, onChange: (e: C
         <div className="h-full flex flex-col">
             <div className="flex-1 border">
                 <textarea
-                    value={value} // Set value attribute to populate textarea with fetched content
+                    value={value} 
                     onChange={onChange}
                     id="editor"
                     className="h-full w-full p-2 text-sm text-gray-800 bg-white border-0 focus:outline-none"

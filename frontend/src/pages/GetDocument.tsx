@@ -18,7 +18,7 @@ const GetDocument: React.FC = () => {
             const message = JSON.parse(event.data);
             console.log(message);
             if (message.type === "documentFound") {
-                setContent(message.content);  // Set the content state with the received content
+                setContent(message.content);  
             } else {
                 alert("Room not found");
             }
@@ -49,9 +49,9 @@ const GetDocument: React.FC = () => {
                 </button>
             </div>
 
-            {/* Conditionally render the TextEditor if content is available */}
+            
             {content && (
-                <div className="mt-8 bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl">
+                <div className="mt-8 bg-white p-4 rounded-lg shadow-lg w-full max-w-3xl h-full">
                     <TextEditor value={content} onChange={() => {}} />
                 </div>
             )}
