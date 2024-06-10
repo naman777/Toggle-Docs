@@ -1,14 +1,18 @@
 export class Document {
     private content : string;
-    private title : string;
+    public documentTitle : string;
 
-    constructor () {
+    constructor (documentTitle:string) {
         this.content = '';
-        this.title = '';
+        this.documentTitle = documentTitle;
+        this.addTitle(documentTitle);
+
+        console.log(documentTitle);
     }
 
-    addTitle(title: string){
-        this.title = title;
+    addTitle(documentTitle: string){
+        this.documentTitle = documentTitle;
+        return documentTitle;
     }
 
     setContent(content: string){

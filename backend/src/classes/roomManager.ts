@@ -14,8 +14,8 @@ export class RoomManager {
         this.socketRoomMap = new Map();
     }
 
-    createRoom(roomName: string, socket: WebSocket, usersName: string) {
-        const room = new Room(roomName, socket, usersName);
+    createRoom(roomName: string, socket: WebSocket, usersName: string, documentTitle:string) {
+        const room = new Room(roomName, socket, usersName,documentTitle);
         this.rooms.push(room);
         this.socketAdminRoomMap.set(socket, room.id);
     }

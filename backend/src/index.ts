@@ -16,7 +16,7 @@ wss.on('connection', function connection(ws) {
         const message = JSON.parse(data.toString());
 
         if(message.type ===  CREATE_ROOM){
-            roomManager.createRoom(message.roomName, ws, message.usersName )
+            roomManager.createRoom(message.roomName, ws, message.usersName,message.documentTitle )
         }
 
         if(message.type === JOIN_ROOM){

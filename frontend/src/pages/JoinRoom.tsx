@@ -4,29 +4,29 @@ import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../hooks/UserContext';
 
 
-const CreateRoom: React.FC = () => {
-    const [roomName, setRoomName] = useState('');
+const JoinRoom: React.FC = () => {
+    const [roomId, setRoomId] = useState('');
     const [usersName, setUserName] = useState('');
-    const [documentTitle, setDocumentTitle] = useState("");
-
+    
+    
     const navigate = useNavigate();
     const socket = useWebSocket();
 
-    const { setUsers } = useUserContext();
+    const {setUsers} = useUserContext();
 
     const handleCreateRoom = async () => {
         socket?.send(JSON.stringify({
-            type:"create_room",
-            roomName:roomName,
-            usersName:usersName,
-            documentTitle:documentTitle
+            type:"join_room",
+            roomId:roomId,
+            usersName:usersName
         }));
 
         socket!.onmessage  = (event) => {
             const message = JSON.parse(event.data)
+            console.log(message);
             if (message.type === "roomJoined") {
-                setUsers(message.users)
-                navigate(`/room/${roomName}/${message.roomId}/${documentTitle}`);
+                setUsers(message.users);
+                navigate(`/room/${message.roomName}/${message.roomId}/${message.documentTitle}`);
             }
         }
 
@@ -37,25 +37,14 @@ const CreateRoom: React.FC = () => {
             <h1 className="text-3xl font-bold mb-2  text-white">Create your room</h1>
             <div className="bg-white p-16 rounded-lg shadow-lg ">
                 <div className="mb-4">
-                    <label htmlFor="roomName" className="block text-black font-bold mb-2">Room's Name</label>
+                    <label htmlFor="roomName" className="block text-black font-bold mb-2">Room's Id</label>
                     <input
                         type="text"
                         id="roomName"
                         className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                        placeholder="Enter your room's name"
-                        value={roomName}
-                        onChange={(e) => setRoomName(e.target.value)}
-                    />
-                </div>
-                <div className="mb-4">
-                    <label htmlFor="roomName" className="block text-black font-bold mb-2">Doc's Title</label>
-                    <input
-                        type="text"
-                        id="Docs"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                        placeholder="Enter your doc's title"
-                        value={documentTitle}
-                        onChange={(e) => setDocumentTitle(e.target.value)}
+                        placeholder="Enter your room's id"
+                        value={roomId}
+                        onChange={(e) => setRoomId(e.target.value)}
                     />
                 </div>
 
@@ -74,11 +63,11 @@ const CreateRoom: React.FC = () => {
                     className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md"
                     onClick={handleCreateRoom}
                 >
-                    Create Room
+                    Join Room
                 </button>
             </div>
         </div>
     );
 };
 
-export default CreateRoom;
+export default JoinRoom;

@@ -7,15 +7,17 @@ export class Room {
     private name: string;
     private users: WebSocket[];
     private usersName: string[];
-    private document: Document;
+    private documentTitle : string
+    private documnetContent: string;
 
-    constructor(roomName: string, socket: WebSocket, usersName: string) {
+    constructor(roomName: string, socket: WebSocket, usersName: string, documentTitle: string) {
         this.id = uuidv4();
         this.name = roomName;
         this.users = [];
         this.usersName = [];
         this.addUser(socket, usersName);
-        this.document = new Document();
+        this.documentTitle = documentTitle;
+        this.documnetContent = "";
     }
 
     addUser(socket: WebSocket, usersName: string): void {
@@ -26,8 +28,10 @@ export class Room {
             type: 'roomJoined',
             roomName: this.name,
             users: this.usersName,
-            roomId: this.id
+            roomId: this.id,
+            documentTitle: this.documentTitle
         }))
+            
 
         this.broadcastMessage(JSON.stringify({
             type: 'updateUsers',
@@ -38,7 +42,8 @@ export class Room {
 
 
     addContent(newContent: string): void {
-        this.document.setContent(newContent);
+        this.documnetContent = newContent;
+
         this.broadcastMessage(JSON.stringify({
             type: 'documentEdited',
             content: newContent
@@ -46,9 +51,9 @@ export class Room {
     }
 
     saveContent(content: string){
-        this.document.setContent(content);
+        this.documnetContent = content;
         this.broadcastMessage(JSON.stringify({
-            type: 'Document Saved',
+            type: 'documentSaved',
             content: content
         }));
     }
