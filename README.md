@@ -2,6 +2,16 @@
 
 Toggle Docs is an application that allows users to toggle between different document versions easily.
 
+## Demo
+
+Check out this short demo video to see how Toggle Docs works:
+
+https://github.com/naman777/Toggle-Docs/assets/154436228/dc705c1c-6126-4727-a54a-77a8709add92
+
+
+
+
+
 ## Setup
 
 ### Backend (Node.js)
