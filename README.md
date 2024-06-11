@@ -1,6 +1,6 @@
 # Toggle Docs
 
-Toggle Docs is an application that allows users to toggle between different document versions easily.
+Toggle Docs is an application that allows multiple users to edit one document together similar to Google Docs.
 
 ## Demo
 
