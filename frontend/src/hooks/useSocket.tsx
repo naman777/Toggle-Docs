@@ -10,7 +10,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
     useEffect(() => {
-        const ws = new WebSocket('wss://43.205.183.136:8080');
+        const ws = new WebSocket('wss://toggle-docs.onrender.com');
 
         ws.onopen = () => {
             console.log('WebSocket connection opened');
