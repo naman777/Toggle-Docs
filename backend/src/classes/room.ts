@@ -7,22 +7,22 @@ export class Room {
     private name: string;
     private users: WebSocket[];
     private usersName: string[];
-    private documentTitle : string
-    private documnetContent: string;
+    private documentTitle: string;
+    private documentContent: string;
 
-    constructor(roomName: string, socket: WebSocket, usersName: string, documentTitle: string) {
+    constructor(roomName: string, socket: WebSocket, userName: string, documentTitle: string) {
         this.id = uuidv4();
         this.name = roomName;
         this.users = [];
         this.usersName = [];
-        this.addUser(socket, usersName);
+        this.addUser(socket, userName);
         this.documentTitle = documentTitle;
-        this.documnetContent = "";
+        this.documentContent = "";
     }
 
-    addUser(socket: WebSocket, usersName: string): void {
+    addUser(socket: WebSocket, userName: string): void {
         this.users.push(socket);
-        this.usersName.push(usersName);
+        this.usersName.push(userName);
 
         socket.send(JSON.stringify({
             type: 'roomJoined',
@@ -30,48 +30,50 @@ export class Room {
             users: this.usersName,
             roomId: this.id,
             documentTitle: this.documentTitle
-        }))
+        }));
             
-
         this.broadcastMessage(JSON.stringify({
             type: 'updateUsers',
             users: this.usersName
-        }));
-
+        }), socket);
     }
 
-
     addContent(newContent: string): void {
-        this.documnetContent = newContent;
+        this.documentContent = newContent;
 
         this.broadcastMessage(JSON.stringify({
             type: 'documentEdited',
-            content: this.documnetContent
+            content: this.documentContent
         }));
     }
 
-    saveContent(content: string){
-        this.documnetContent = content;
+    saveContent(content: string): void {
+        this.documentContent = content;
+
         this.broadcastMessage(JSON.stringify({
             type: 'documentSaved',
-            content: this.documnetContent
+            content: this.documentContent
         }));
     }
 
     removeUser(socket: WebSocket): void {
-        this.users = this.users.filter(user => user !== socket);
-        this.broadcastMessage(JSON.stringify({
-            type: 'updateUsers',
-            users: this.usersName
-        }));
+        const index = this.users.indexOf(socket);
+        if (index !== -1) {
+            this.users.splice(index, 1);
+            this.usersName.splice(index, 1);
 
+            this.broadcastMessage(JSON.stringify({
+                type: 'updateUsers',
+                users: this.usersName
+            }));
+        }
     }
 
-    broadcastMessage(message: string): void {
+    broadcastMessage(message: string, excludeSocket?: WebSocket): void {
         this.users.forEach(user => {
-            user.send(message);
+            if (user !== excludeSocket) {
+                user.send(message);
+            }
         });
     }
-
-    
 }
