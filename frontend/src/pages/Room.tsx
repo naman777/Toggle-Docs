@@ -5,11 +5,13 @@ import 'react-quill/dist/quill.snow.css';
 import Sidebar from '../components/SideBar';
 import Topbar from '../components/Topbar';
 import { useUserContext } from '../hooks/UserContext';
+import { useDebounce } from '../hooks/useDebounce';
 
 const Room: React.FC = () => {
     const { roomName, roomId, documentTitle } = useParams<{ roomName: string, roomId: string, documentTitle: string }>();
     const socket = useWebSocket();
     const [content, setContent] = useState('');
+    const debouncedContent = useDebounce(content, 300); // Adjust the delay as needed
     const { users, setUsers } = useUserContext();
 
     useEffect(() => {
@@ -17,10 +19,10 @@ const Room: React.FC = () => {
             socket.send(JSON.stringify({
                 type: 'add_content',
                 roomId,
-                content: content
+                content: debouncedContent
             }));
         }
-    }, [socket, roomId, content]);
+    }, [socket, roomId, debouncedContent]);
 
     useEffect(() => {
         if (socket) {
@@ -67,7 +69,7 @@ export function TextEditor({ value, onChange }: { value: string, onChange: (e: C
         <div className="h-full flex flex-col">
             <div className="flex-1 border">
                 <textarea
-                    value={value} 
+                    value={value}
                     onChange={onChange}
                     id="editor"
                     className="h-full w-full p-2 text-sm text-gray-800 bg-white border-0 focus:outline-none"
