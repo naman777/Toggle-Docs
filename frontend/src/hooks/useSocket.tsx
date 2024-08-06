@@ -1,6 +1,7 @@
+// WebSocketProvider.js
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
-const WebSocketContext = createContext<WebSocket | null>(null);
+const WebSocketContext = createContext<{ socket: WebSocket | null, isConnected: boolean }>({ socket: null, isConnected: false });
 
 interface WebSocketProviderProps {
     children: ReactNode;
@@ -8,6 +9,7 @@ interface WebSocketProviderProps {
 
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
+    const [isConnected, setIsConnected] = useState<boolean>(false);
 
     useEffect(() => {
         const ws = new WebSocket('wss://toggle-docs.onrender.com');
@@ -15,11 +17,13 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
         ws.onopen = () => {
             console.log('WebSocket connection opened');
             setSocket(ws);
+            setIsConnected(true);
         };
 
         ws.onclose = () => {
             console.log('WebSocket connection closed');
             setSocket(null);
+            setIsConnected(false);
         };
 
         ws.onerror = (error) => {
@@ -32,7 +36,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     }, []);
 
     return (
-        <WebSocketContext.Provider value={socket}>
+        <WebSocketContext.Provider value={{ socket, isConnected }}>
             {children}
         </WebSocketContext.Provider>
     );

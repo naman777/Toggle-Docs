@@ -6,7 +6,7 @@ const GetDocument: React.FC = () => {
     const [roomId, setRoomId] = useState('');
     const [content, setContent] = useState<string | null>(null);
 
-    const socket = useWebSocket();
+    const {socket} = useWebSocket();
 
     const handleCreateRoom = async () => {
         socket?.send(JSON.stringify({

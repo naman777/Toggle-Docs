@@ -9,7 +9,7 @@ import { useDebounce } from '../hooks/useDebounce';
 
 const Room: React.FC = () => {
     const { roomName, roomId, documentTitle } = useParams<{ roomName: string, roomId: string, documentTitle: string }>();
-    const socket = useWebSocket();
+    const {socket} = useWebSocket();
     const [content, setContent] = useState('');
     const debouncedContent = useDebounce(content, 300); // Adjust the delay as needed
     const { users, setUsers } = useUserContext();

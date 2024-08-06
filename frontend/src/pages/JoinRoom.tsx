@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {  useWebSocket } from '../hooks/useSocket';
 import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../hooks/UserContext';
+import { Spinner } from '../hooks/Spinner';
 
 
 const JoinRoom: React.FC = () => {
@@ -10,7 +11,7 @@ const JoinRoom: React.FC = () => {
     
     
     const navigate = useNavigate();
-    const socket = useWebSocket();
+    const {socket,isConnected} = useWebSocket();
 
     const {setUsers} = useUserContext();
 
@@ -66,6 +67,11 @@ const JoinRoom: React.FC = () => {
                     Join Room
                 </button>
             </div>
+
+            {!isConnected && (<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <Spinner />
+    </div>)}
+
         </div>
     );
 };
