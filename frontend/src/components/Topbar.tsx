@@ -9,7 +9,7 @@ interface TopbarProps {
 }
 
 const Topbar: React.FC<TopbarProps> = ({ roomName, docName, content }) => {
-  const socket = useWebSocket();
+  const {socket} = useWebSocket();
   const { roomId } = useParams<{ roomId: string }>();
   const [showPopup, setShowPopup] = useState(false);
 
