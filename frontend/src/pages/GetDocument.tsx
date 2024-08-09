@@ -26,7 +26,7 @@ const GetDocument: React.FC = () => {
     };
 
     return (
-        <div className="h-screen flex flex-col justify-center items-center bg-slate-700">
+        <div className="h-screen flex flex-col justify-center items-center">
             <h1 className="text-3xl font-bold mb-2 text-white">Create your room</h1>
             <div className="bg-white p-16 rounded-lg shadow-lg">
                 <div className="mb-4">

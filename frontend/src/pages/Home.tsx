@@ -5,7 +5,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="bg-slate-700 min-h-screen flex flex-col justify-center items-center text-white">
+        <div className=" min-h-screen flex flex-col justify-center items-center text-white">
             <h1 className="text-5xl font-extrabold mb-4">Welcome to Toggle-Docs</h1>
             <p className="text-lg text-center px-40 mt-8 mb-8">
             Toggle-Docs is a powerful collaborative document editing application designed to streamline teamwork and productivity. With Toggle-Docs, users can seamlessly create and join virtual rooms to collaborate on documents in real-time. Whether you're brainstorming ideas, drafting proposals, or editing reports, Toggle-Docs empowers teams to work together efficiently from anywhere in the world. Say goodbye to endless email threads and disjointed feedback loops – with Toggle-Docs, collaboration has never been easier. Start collaborating today and unlock the full potential of teamwork with Toggle-Docs!            </p>
