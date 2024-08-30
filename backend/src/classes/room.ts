@@ -11,7 +11,7 @@ export class Room {
     private documentContent: string;
 
     constructor(roomName: string, socket: WebSocket, userName: string, documentTitle: string) {
-        this.id = uuidv4();
+        this.id = uuidv4().slice(0, 4);
         this.name = roomName;
         this.users = [];
         this.usersName = [];
