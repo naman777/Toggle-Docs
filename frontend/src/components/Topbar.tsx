@@ -27,10 +27,10 @@ const Topbar: React.FC<TopbarProps> = ({ roomName, docName, content }) => {
   return (
     <div className='w-screen flex justify-around bg-slate-700 '>
       <div className='flex-1 w-16 ml-12 mt-2 text-white font-bold text-xl'>
-        {roomName} room
+        roomId: {roomId} 
       </div>
       <div className='flex-2 w-96 mr-80 mt-2 text-white font-bold text-xl'>
-        {docName}
+        {docName}  {roomName}
       </div>
       <div className='flex-3 w-32'>
         <button

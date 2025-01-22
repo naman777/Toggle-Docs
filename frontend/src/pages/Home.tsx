@@ -1,33 +1,59 @@
-import { useNavigate } from "react-router-dom";
+import type React from "react"
+import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
 
-const Home = () => {
+const Home: React.FC = () => {
+  const navigate = useNavigate()
 
-    const navigate = useNavigate();
+  const buttonVariants = {
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95, transition: { duration: 0.2 } },
+  }
 
-    return (
-        <div className=" min-h-screen flex flex-col justify-center items-center text-white">
-            <h1 className="text-5xl font-extrabold mb-4">Welcome to Toggle-Docs</h1>
-            <p className="text-lg text-center px-40 mt-8 mb-8">
-            Toggle-Docs is a powerful collaborative document editing application designed to streamline teamwork and productivity. With Toggle-Docs, users can seamlessly create and join virtual rooms to collaborate on documents in real-time. Whether you're brainstorming ideas, drafting proposals, or editing reports, Toggle-Docs empowers teams to work together efficiently from anywhere in the world. Say goodbye to endless email threads and disjointed feedback loops – with Toggle-Docs, collaboration has never been easier. Start collaborating today and unlock the full potential of teamwork with Toggle-Docs!            </p>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                <button onClick={()=>{
-                    navigate('/create-room');
-                }} className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md shadow-md text-white font-semibold">
-                    Create Room
-                </button>
-                <button onClick={()=>{
-                    navigate('/join-room');
-                }} className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md shadow-md text-white font-semibold">
-                    Join Room
-                </button>
-                <button onClick={()=>{
-                    navigate('/get-document');
-                }}  className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md shadow-md text-white font-semibold">
-                    Get Document
-                </button>
-            </div>
-        </div>
-    );
-};
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-900 to-purple-900 text-white p-4 sm:p-8">
+      <motion.h1
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 text-center"
+      >
+        Welcome to Toggle-Docs
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="text-lg text-center max-w-3xl mt-8 mb-12"
+      >
+        Toggle-Docs is a powerful collaborative document editing application designed to streamline teamwork and
+        productivity. Create and join virtual rooms to collaborate on documents in real-time, from anywhere in the
+        world.
+      </motion.p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-3xl">
+        {[
+          { text: "Create Room", path: "/create-room", color: "from-green-500 to-green-600" },
+          { text: "Join Room", path: "/join-room", color: "from-blue-500 to-blue-600" },
+          { text: "Get Document", path: "/get-document", color: "from-purple-500 to-purple-600" },
+        ].map((button, index) => (
+          <motion.button
+            key={button.text}
+            onClick={() => navigate(button.path)}
+            className={`bg-gradient-to-r ${button.color} px-6 py-3 rounded-lg shadow-lg text-white font-semibold text-lg transition-all duration-300 ease-in-out hover:shadow-xl`}
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+          >
+            {button.text}
+          </motion.button>
+        ))}
+      </div>
+    </div>
+  )
+}
 
-export default Home;
+export default Home
+
