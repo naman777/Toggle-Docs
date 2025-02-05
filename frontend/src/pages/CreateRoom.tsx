@@ -106,7 +106,7 @@ const CreateRoom: React.FC = () => {
             type="text"
             id="userName"
             className="w-full px-4 py-2 text-gray-900 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your name"
+            placeholder="Enter your name. can enter a random name"
             value={usersName}
             onChange={(e) => setUserName(e.target.value)}
           />
