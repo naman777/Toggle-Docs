@@ -12,12 +12,12 @@ export class Room {
 
     constructor(roomName: string, socket: WebSocket, userName: string, documentTitle: string) {
         const id1 = uuidv4().slice(0, 4);
-        this.id = id1;
+        this.id = roomName;
         this.name = roomName;
         this.users = [];
         this.usersName = [];
         this.addUser(socket, userName);
-        this.documentTitle = documentTitle;
+        this.documentTitle = documentTitle || "Untitled Document";
         this.documentContent = "";
     }
 

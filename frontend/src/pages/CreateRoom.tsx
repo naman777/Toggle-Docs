@@ -8,8 +8,8 @@ import { motion } from "framer-motion";
 const CreateRoom: React.FC = () => {
   const [roomName, setRoomName] = useState("");
   const [usersName, setUserName] = useState("");
-  const [documentTitle, setDocumentTitle] = useState("");
-
+  // const [documentTitle, setDocumentTitle] = useState("untitled");
+  const documentTitle = "untitled";
   const navigate = useNavigate();
   const { socket, isConnected } = useWebSocket();
   const { setUsers } = useUserContext();
@@ -83,7 +83,7 @@ const CreateRoom: React.FC = () => {
         </div>
 
         {/* Document Title */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="documentTitle" className="block text-sm font-semibold mb-2">
             Document Title
           </label>
@@ -95,7 +95,7 @@ const CreateRoom: React.FC = () => {
             value={documentTitle}
             onChange={(e) => setDocumentTitle(e.target.value)}
           />
-        </div>
+        </div> */}
 
         {/* Username */}
         <div className="mb-4">
