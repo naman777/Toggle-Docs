@@ -70,13 +70,13 @@ const CreateRoom: React.FC = () => {
         {/* Room Name */}
         <div className="mb-4">
           <label htmlFor="roomName" className="block text-sm font-semibold mb-2">
-            Room Name
+            Room Id
           </label>
           <input
             type="text"
             id="roomName"
             className="w-full px-4 py-2 text-gray-900 border border-gray-700 rounded-md focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter your room's name"
+            placeholder="Enter your room's id"
             value={roomName}
             onChange={(e) => setRoomName(e.target.value)}
           />
